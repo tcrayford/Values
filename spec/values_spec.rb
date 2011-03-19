@@ -61,6 +61,11 @@ describe 'values' do
       Point.new(0,0).should_not == Y.new(0,0)
     end
 
+    it 'is not equal to another value with different fields' do
+      Point.new(0,0).should_not == Point.new(0,1)
+      Point.new(0,0).should_not == Point.new(1,0)
+    end
+
     it 'has an equal hash if the fields are equal' do
       p = Point.new(0,0)
       p.hash.should == Point.new(0,0).hash
