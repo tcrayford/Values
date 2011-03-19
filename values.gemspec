@@ -10,7 +10,16 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Crayford"]
   s.date = %q{2011-03-19}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Simple immutable value objects for ruby.
+
+    Make a new value class: Point = Value.new(:x, :y)
+    And use it:
+    p = Point.new(1,0)
+    p.x
+    => 1
+    p.y
+    => 0
+    }
   s.email = %q{tcrayford@googlemail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -34,7 +43,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Simple immutable value objects for ruby}
   s.test_files = [
     "spec/spec_helper.rb",
     "spec/values_spec.rb"
