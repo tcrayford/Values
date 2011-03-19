@@ -15,8 +15,17 @@ Jeweler::Tasks.new do |gem|
   gem.name = "values"
   gem.homepage = "http://github.com/tcrayford/values"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Simple immutable value objects for ruby}
+  gem.description = %Q{Simple immutable value objects for ruby.
+
+    Make a new value class: Point = Value.new(:x, :y)
+    And use it:
+    p = Point.new(1,0)
+    p.x
+    => 1
+    p.y
+    => 0
+    }
   gem.email = "tcrayford@googlemail.com"
   gem.authors = ["Tom Crayford"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
