@@ -27,3 +27,5 @@ Values fixes both of these:
     => NoMethodError: undefined method x= for #<Point:0x00000100943788 @x=0, @y=1>
     from (irb):6
     from /usr/local/bin/irb:12:in <main>
+
+Value does NOT have all the features of Struct (nor is it meant to).
