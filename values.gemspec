@@ -27,7 +27,8 @@ Gem::Specification.new do |s|
     "VERSION",
     "lib/values.rb",
     "spec/spec_helper.rb",
-    "spec/values_spec.rb"
+    "spec/values_spec.rb",
+    "values.gemspec"
   ]
   s.homepage = %q{http://github.com/tcrayford/values}
   s.licenses = ["MIT"]
