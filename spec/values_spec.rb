@@ -49,4 +49,25 @@ describe 'values' do
     m = Money.new(1, 'USD')
     lambda {m.instance_variable_set('@amount',2)}.should raise_error
   end
+
+  describe '#hash and equality' do
+    Y = Value.new(:x, :y)
+
+    it 'is equal to another value with the same fields' do
+      Point.new(0,0).should == Point.new(0,0)
+    end
+
+    it 'is not equal to an object with a different class' do
+      Point.new(0,0).should_not == Y.new(0,0)
+    end
+
+    it 'has an equal hash if the fields are equal' do
+      p = Point.new(0,0)
+      p.hash.should == Point.new(0,0).hash
+    end
+
+    it 'does not have an equal hash if the class is different' do
+      Point.new(0,0).hash.should_not == Y.new(0,0).hash
+    end
+  end
 end
