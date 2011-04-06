@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{values}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Crayford"]
-  s.date = %q{2011-03-19}
+  s.date = %q{2011-04-06}
   s.description = %q{Simple immutable value objects for ruby.
 
     Make a new value class: Point = Value.new(:x, :y)
