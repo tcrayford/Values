@@ -71,6 +71,11 @@ describe 'values' do
       p.hash.should == Point.new(0,0).hash
     end
 
+    it 'has a non-equal hash if the fields are different' do
+      p = Point.new(0,0)
+      p.hash.should_not == Point.new(1,0).hash
+    end
+
     it 'does not have an equal hash if the class is different' do
       Point.new(0,0).hash.should_not == Y.new(0,0).hash
     end

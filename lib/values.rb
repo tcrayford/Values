@@ -28,7 +28,7 @@ class Value
       def hash
         result = 0
         self.class::VALUE_ATTRS.each do |field|
-          result += field.hash
+          result += self.send(field).hash
         end
         return result + self.class.hash
       end
