@@ -16,6 +16,7 @@ Structs are also mutable:
     => 2
 
 Values fixes both of these:
+
     Point = Value.new(:x, :y)
     Point.new(1)
     => ArgumentError: wrong number of arguments, 1 for 2
