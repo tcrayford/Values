@@ -13,6 +13,12 @@ describe 'values' do
     p.y.should == 1
   end
 
+  it 'can be initialized with []' do
+    p = Point[0,1]
+    p.should be_a Point
+    p.should == Point.new(0,1)
+  end
+
   it 'raises argument errors if not given the right number of arguments' do
     lambda { Point.new }.should raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
   end
