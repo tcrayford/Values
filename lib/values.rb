@@ -14,6 +14,10 @@ class Value
 
       const_set :VALUE_ATTRS, fields
 
+      class << self
+        alias [] new
+      end
+
       def ==(other)
         self.eql?(other)
       end
