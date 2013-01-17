@@ -4,23 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{values}
+  s.name = "values"
   s.version = "1.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Crayford"]
-  s.date = %q{2011-04-06}
-  s.description = %q{Simple immutable value objects for ruby.
-
-    Make a new value class: Point = Value.new(:x, :y)
-    And use it:
-    p = Point.new(1,0)
-    p.x
-    => 1
-    p.y
-    => 0
-    }
-  s.email = %q{tcrayford@googlemail.com}
+  s.date = "2013-01-17"
+  s.description = "Simple immutable value objects for ruby.\n\n    Make a new value class: Point = Value.new(:x, :y)\n    And use it:\n    p = Point.new(1,0)\n    p.x\n    => 1\n    p.y\n    => 0\n    "
+  s.email = "tcrayford@googlemail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -39,18 +30,17 @@ Gem::Specification.new do |s|
     "spec/values_spec.rb",
     "values.gemspec"
   ]
-  s.homepage = %q{http://github.com/tcrayford/values}
+  s.homepage = "http://github.com/tcrayford/values"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Simple immutable value objects for ruby}
+  s.rubygems_version = "1.8.15"
+  s.summary = "Simple immutable value objects for ruby"
   s.test_files = [
     "spec/spec_helper.rb",
     "spec/values_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
