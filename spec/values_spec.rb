@@ -50,6 +50,27 @@ describe 'values' do
     lambda {m.instance_variable_set('@amount',2)}.should raise_error
   end
 
+  it 'can be instantiated with a hash' do
+    Money = Value.new(:amount, :denomination)
+    one_dollar = Money.with(:amount => 1, :denomination => 'USD')
+    one_dollar.amount.should == 1
+    one_dollar.denomination.should == 'USD'
+  end
+
+  it 'errors if you instantiate it from a hash with unrecognised fields' do
+    Money = Value.new(:amount, :denomination)
+    expect do
+      Money.with(:unrecognized_field => 1, :amount => 2, :denomination => 'USD')
+    end.to raise_error
+  end
+
+  it 'errors if you instantiate it from a hash with missing fields' do
+    Money = Value.new(:amount, :denomination)
+    expect do
+      Money.with
+    end.to raise_error
+  end
+
   describe '#hash and equality' do
     Y = Value.new(:x, :y)
 

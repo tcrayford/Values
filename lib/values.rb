@@ -14,6 +14,23 @@ class Value
 
       const_set :VALUE_ATTRS, fields
 
+      def self.with(hash)
+        args = []
+        self::VALUE_ATTRS.each do |field|
+          val = hash[field]
+          if val
+            args << val
+          else
+            raise ArgumentError.new("Missing field: #{field}")
+          end
+        end
+        unexpected_keys = hash.keys - self::VALUE_ATTRS
+        if unexpected_keys.any?
+          raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
+        end
+        self.new(*args)
+      end
+
       def ==(other)
         self.eql?(other)
       end
