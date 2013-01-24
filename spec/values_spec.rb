@@ -71,6 +71,13 @@ describe 'values' do
     end.to raise_error
   end
 
+  it 'does not error when fields are explicitly nil' do
+    Money = Value.new(:amount, :denomination)
+    expect do
+      Money.with(:amount => 1, :denomination => nil)
+    end.not_to raise_error
+  end
+
   describe '#hash and equality' do
     Y = Value.new(:x, :y)
 
