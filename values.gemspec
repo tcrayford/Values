@@ -35,10 +35,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.15"
   s.summary = "Simple immutable value objects for ruby"
-  s.test_files = [
-    "spec/spec_helper.rb",
-    "spec/values_spec.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
