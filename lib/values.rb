@@ -33,8 +33,8 @@ class Value
 
       def hash
         result = 0
-        self.class::VALUE_ATTRS.each do |field|
-          result += self.send(field).hash
+        values.each do |value|
+          result += value.hash
         end
         return result + self.class.hash
       end
