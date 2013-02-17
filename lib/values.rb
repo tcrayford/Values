@@ -28,8 +28,7 @@ class Value
       end
 
       def eql?(other)
-        return false if other.class != self.class
-        values == other.values
+        self.class == other.class && values == other.values
       end
 
       def hash
