@@ -9,7 +9,8 @@ class Value
         fields.zip(values) do |field, value|
           instance_variable_set(:"@#{field}", value)
         end
-        self.freeze
+
+        freeze
       end
 
       const_set :VALUE_ATTRS, fields
@@ -20,11 +21,11 @@ class Value
           raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
         end
 
-        self.new(*hash.values_at(*self::VALUE_ATTRS))
+        new(*hash.values_at(*self::VALUE_ATTRS))
       end
 
       def ==(other)
-        self.eql?(other)
+        eql?(other)
       end
 
       def eql?(other)
