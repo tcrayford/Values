@@ -1,6 +1,6 @@
 class Value
   def self.new(*fields)
-    return Class.new do
+    Class.new do
       attr_reader *fields
 
       define_method(:initialize) do |*values|
@@ -32,7 +32,7 @@ class Value
       end
 
       def hash
-        return values.map(&:hash).inject(0, :+) + self.class.hash
+        values.map(&:hash).inject(0, :+) + self.class.hash
       end
 
       def values
