@@ -37,4 +37,12 @@ p.x = 1
 # from /usr/local/bin/irb:12:in <main>
 ```
 
+Values also provides an alternative constructor which takes a hash:
+
+```ruby
+p = Point.with(x: 3, y: 4)
+p.x
+# => 3
+```
+
 Values does NOT have all the features of Struct (nor is it meant to).
