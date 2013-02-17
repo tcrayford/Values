@@ -107,4 +107,10 @@ describe 'values' do
       Point.new(0,0).hash.should_not == Y.new(0,0).hash
     end
   end
+
+  describe '#values' do
+    it 'returns an array of field values' do
+      Point.new(10, 13).values.should == [10, 13]
+    end
+  end
 end
