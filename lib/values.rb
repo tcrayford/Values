@@ -29,9 +29,7 @@ class Value
 
       def eql?(other)
         return false if other.class != self.class
-        self.class::VALUE_ATTRS.all? do |field|
-          self.send(field) == other.send(field)
-        end
+        self.class::VALUE_ATTRS.map { |field| send(field) } == self.class::VALUE_ATTRS.map { |field| other.send(field) }
       end
 
       def hash
