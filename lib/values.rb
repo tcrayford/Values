@@ -3,11 +3,11 @@ class Value
     return Class.new do
       attr_reader *fields
 
-      define_method(:initialize) do |*input_fields|
-        raise ArgumentError.new("wrong number of arguments, #{input_fields.size} for #{fields.size}") if fields.size != input_fields.size
+      define_method(:initialize) do |*values|
+        raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
 
         fields.each_with_index do |field, index|
-          instance_variable_set(:"@#{field}", input_fields[index])
+          instance_variable_set(:"@#{field}", values[index])
         end
         self.freeze
       end
