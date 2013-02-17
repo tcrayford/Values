@@ -33,8 +33,8 @@ class Value
 
       def hash
         result = 0
-        values.each do |value|
-          result += value.hash
+        values.map(&:hash).each do |hash|
+          result += hash
         end
         return result + self.class.hash
       end
