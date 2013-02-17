@@ -15,13 +15,12 @@ class Value
       const_set :VALUE_ATTRS, fields
 
       def self.with(hash)
-        args = hash.values_at(*self::VALUE_ATTRS)
-
         unexpected_keys = hash.keys - self::VALUE_ATTRS
         if unexpected_keys.any?
           raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
         end
-        self.new(*args)
+
+        self.new(*hash.values_at(*self::VALUE_ATTRS))
       end
 
       def ==(other)
