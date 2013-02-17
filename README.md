@@ -37,4 +37,4 @@ p.x = 1
 # from /usr/local/bin/irb:12:in <main>
 ```
 
-Value does NOT have all the features of Struct (nor is it meant to).
+Values does NOT have all the features of Struct (nor is it meant to).
