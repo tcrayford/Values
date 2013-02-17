@@ -32,11 +32,7 @@ class Value
       end
 
       def hash
-        result = 0
-        values.map(&:hash).each do |hash|
-          result += hash
-        end
-        return result + self.class.hash
+        return values.map(&:hash).inject(0, :+) + self.class.hash
       end
 
       def values
