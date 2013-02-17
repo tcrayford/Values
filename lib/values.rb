@@ -15,10 +15,7 @@ class Value
       const_set :VALUE_ATTRS, fields
 
       def self.with(hash)
-        args = []
-        self::VALUE_ATTRS.each do |field|
-          args << hash.fetch(field)
-        end
+        args = hash.values_at(*self::VALUE_ATTRS)
 
         unexpected_keys = hash.keys - self::VALUE_ATTRS
         if unexpected_keys.any?
