@@ -6,8 +6,8 @@ class Value
       define_method(:initialize) do |*values|
         raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
 
-        fields.each_with_index do |field, index|
-          instance_variable_set(:"@#{field}", values[index])
+        fields.zip(values) do |field, value|
+          instance_variable_set(:"@#{field}", value)
         end
         self.freeze
       end
