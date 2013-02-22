@@ -16,7 +16,7 @@ describe 'values' do
   end
 
   it 'raises argument errors if not given the right number of arguments' do
-    lambda { Point.new }.should raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
   end
 
   class GraphPoint < Value.new(:x, :y)
@@ -32,7 +32,7 @@ describe 'values' do
 
   it 'cannot be mutated' do
     p = Point.new(0,1)
-    lambda { p.x = 1}.should raise_error
+    expect { p.x = 1 }.to raise_error
   end
 
   class Cow < Value.new(:color)
@@ -43,14 +43,14 @@ describe 'values' do
 
   it 'cannot even be mutated inside a sublass with methods' do
     c = Cow.new("red")
-    lambda {c.change_color("blue")}.should raise_error
+    expect { c.change_color("blue") }.to raise_error
   end
 
   Money = Value.new(:amount, :denomination)
 
   it 'cannot be mutated using #instance_variable_set' do
     m = Money.new(1, 'USD')
-    lambda {m.instance_variable_set('@amount',2)}.should raise_error
+    expect { m.instance_variable_set('@amount', 2) }.to raise_error
   end
 
   it 'can be instantiated with a hash' do
