@@ -4,7 +4,7 @@ These mostly look like classes created using Struct, but fix two problems with t
 Struct constructors can take less than the default number of arguments and set other fields as nil:
 
 ```ruby
-Point = Struct.new(:x,:y)
+Point = Struct.new(:x, :y)
 Point.new(1)
 # => #<struct Point x=1, y=nil>
 ```
@@ -12,8 +12,8 @@ Point.new(1)
 Structs are also mutable:
 
 ```ruby
-Point = Struct.new(:x,:y)
-p = Point.new(1,2)
+Point = Struct.new(:x, :y)
+p = Point.new(1, 2)
 p.x = 2
 p.x
 # => 2
@@ -30,11 +30,19 @@ Point.new(1)
 # from (irb):5
 # from /usr/local/bin/irb:12:in `<main>
 
-p = Point.new(1,2)
+p = Point.new(1, 2)
 p.x = 1
 # => NoMethodError: undefined method x= for #<Point:0x00000100943788 @x=0, @y=1>
 # from (irb):6
 # from /usr/local/bin/irb:12:in <main>
 ```
 
-Value does NOT have all the features of Struct (nor is it meant to).
+Values also provides an alternative constructor which takes a hash:
+
+```ruby
+p = Point.with(x: 3, y: 4)
+p.x
+# => 3
+```
+
+Values does NOT have all the features of Struct (nor is it meant to).
