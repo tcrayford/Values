@@ -1,7 +1,7 @@
 class Value
   def self.new(*fields)
     Class.new do
-      attr_reader *fields
+      attr_reader(*fields)
 
       define_method(:initialize) do |*values|
         raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
