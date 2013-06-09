@@ -1,5 +1,5 @@
 class Value
-  def self.new(*fields)
+  def self.new(*fields, &block)
     Class.new do
       attr_reader(*fields)
 
@@ -39,6 +39,8 @@ class Value
       def values
         self.class::VALUE_ATTRS.map { |field| send(field) }
       end
+
+      class_eval &block if block
     end
   end
 end

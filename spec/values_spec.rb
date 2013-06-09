@@ -30,6 +30,17 @@ describe 'values' do
     c.inspect.should == 'GraphPoint at 0,0'
   end
 
+  Line = Value.new(:slope, :y_intercept) do
+    def inspect
+      "<Line: y=#{slope}x+#{y_intercept}>"
+    end
+  end
+
+  it 'can be customized with a block' do
+    l = Line.new(2, 3)
+    l.inspect.should == '<Line: y=2x+3>'
+  end
+
   it 'cannot be mutated' do
     p = Point.new(0,1)
     expect { p.x = 1 }.to raise_error
