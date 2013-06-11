@@ -45,4 +45,18 @@ p.x
 # => 3
 ```
 
+Values also supports customization of value classes by passing a block to `Value.new`:
+
+```ruby
+Point = Value.new(:x, :y) do
+  def to_s
+    "<Point at (#{x}, #{y})>"
+  end
+end
+
+p = Point.new(1, 2)
+p.to_s
+# => "<Point at (1, 2)>"
+```
+
 Values does NOT have all the features of Struct (nor is it meant to).
