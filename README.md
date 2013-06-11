@@ -54,8 +54,9 @@ Point = Value.new(:x, :y) do
   end
 end
 
-Point.new(1, 2).to_s
-#=> "<Point at (1, 2)>"
+p = Point.new(1, 2)
+p.to_s
+# => "<Point at (1, 2)>"
 ```
 
 Values does NOT have all the features of Struct (nor is it meant to).
