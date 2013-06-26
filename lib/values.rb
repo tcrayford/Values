@@ -1,7 +1,7 @@
 class Value
   def self.new(*fields, &block)
     Class.new do
-      attr_reader(*fields)
+      attr_reader(:hash, *fields)
 
       define_method(:initialize) do |*values|
         raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
@@ -9,6 +9,8 @@ class Value
         fields.zip(values) do |field, value|
           instance_variable_set(:"@#{field}", value)
         end
+
+        @hash = self.class.hash ^ values.hash
 
         freeze
       end
@@ -30,10 +32,6 @@ class Value
 
       def eql?(other)
         self.class == other.class && values == other.values
-      end
-
-      def hash
-        values.map(&:hash).inject(0, :+) + self.class.hash
       end
 
       def values
