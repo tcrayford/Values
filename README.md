@@ -48,7 +48,7 @@ p.x
 Values also supports customization of value classes by passing a block to `Value.new`:
 
 ```ruby
-Point = Value.new(:x, :y) do
+class Point < Value.new(:x, :y)
   def to_s
     "<Point at (#{x}, #{y})>"
   end
