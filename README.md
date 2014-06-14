@@ -45,7 +45,7 @@ p.x
 # => 3
 ```
 
-Values also supports customization of value classes by passing a block to `Value.new`:
+Values also supports customization of value classes inheriting from `Value.new`:
 
 ```ruby
 class Point < Value.new(:x, :y)
