@@ -23,6 +23,11 @@ class Value
           raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
         end
 
+        missing_keys = self::VALUE_ATTRS - hash.keys
+        if missing_keys.any?
+          raise ArgumentError.new("Missing hash keys: #{missing_keys}")
+        end
+
         new(*hash.values_at(*self::VALUE_ATTRS))
       end
 

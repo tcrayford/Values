@@ -78,8 +78,8 @@ describe 'values' do
 
   it 'errors if you instantiate it from a hash with missing fields' do
     expect do
-      Money.with
-    end.to raise_error
+      Money.with({})
+    end.to raise_error(ArgumentError)
   end
 
   it 'does not error when fields are explicitly nil' do
