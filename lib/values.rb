@@ -43,6 +43,11 @@ class Value
         self.class::VALUE_ATTRS.map { |field| send(field) }
       end
 
+      def inspect
+        attributes = self.class::VALUE_ATTRS.map { |field| "#{field}=#{send(field).inspect}" }.join(", ")
+        "#<#{self.class.name} #{attributes}>"
+      end
+
       class_eval &block if block
     end
   end

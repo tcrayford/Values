@@ -30,6 +30,11 @@ describe 'values' do
     c.inspect.should == 'GraphPoint at 0,0'
   end
 
+  it 'has a pretty string representation' do
+    p = Point.new(0, 1)
+    p.inspect.should == "#<Point x=0, y=1>"
+  end
+
   Line = Value.new(:slope, :y_intercept) do
     def inspect
       "<Line: y=#{slope}x+#{y_intercept}>"
