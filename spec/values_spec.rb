@@ -129,4 +129,50 @@ describe 'values' do
       Point.new(10, 13).values.should == [10, 13]
     end
   end
+
+  describe '#copy' do
+    let(:p) { Point.new(0, 0) }
+
+    describe 'with no arguments' do
+      it 'returns an object equal by value' do
+        expect(p.copy).to eq(p)
+      end
+
+      it 'returns an object equal by identity' do
+        expect(p.copy).to equal(p)
+      end
+    end
+
+    describe 'with positional arguments' do
+      it 'replaces all field value' do
+        expect(p.copy(1, 2)).to eq(Point.new(1, 2))
+      end
+
+      it 'defaults to current values if missing later arguments' do
+        expect(p.copy(1)).to eq(Point.new(1, 0))
+      end
+
+      it 'replaces a field value even if new value is nil' do
+        expect(p.copy(nil)).to eq(Point.new(nil, 0))
+      end
+
+      it 'raises argument error if too many arguments' do
+        expect { p.copy(1, 2, 3) }.to raise_error(ArgumentError, 'wrong number of arguments, 3 for 2')
+      end
+    end
+
+    describe 'with hash arguments' do
+      it 'replaces all field values' do
+        expect(p.copy({ :x => 1, :y => 2 })).to eq(Point.new(1, 2))
+      end
+
+      it 'defaults to current values if missing' do
+        expect(p.copy({ :y => 2 })).to eq(Point.new(0, 2))
+      end
+
+      it 'raises argument error if unknown field' do
+        expect { p.copy({ :foo => 3 }) }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end
