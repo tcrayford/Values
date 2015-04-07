@@ -1,5 +1,7 @@
 class Value
   def self.new(*fields, &block)
+    raise ArgumentError.new('wrong number of arguments (0 for 1+)') if fields.empty?
+
     Class.new do
       attr_reader(:hash, *fields)
 
