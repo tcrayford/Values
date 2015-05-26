@@ -45,12 +45,12 @@ p.x
 # => 3
 ```
 
-Values also allows copying some values and replacing others:
+Values can copy and replace fields using a hash:
 
 ```ruby
-p = Point.with(x: 0, y: 0)
-q = p.copy(y: 2)
-# => #<Point x=0, y=2>
+p = Point.with(x: 1, y: -1)
+q = p.with(y: 2)
+# => #<Point x=1, y=2>
 ```
 
 Values also supports customization of value classes inheriting from `Value.new`:

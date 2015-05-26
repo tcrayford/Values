@@ -48,20 +48,10 @@ class Value
         "#<#{self.class.name} #{attributes}>"
       end
 
-      def copy(*args)
-        return self if args.empty?
-
-        if args.size > self.class::VALUE_ATTRS.size
-          raise ArgumentError.new("wrong number of arguments, #{args.size} for #{self.class::VALUE_ATTRS.size}")
-        end
-
-        if args.size == 1 && args[0].is_a?(Hash)
-          merged_hash = Hash[self.class::VALUE_ATTRS.map { |field| [field, send(field)]}].merge(args[0])
-          self.class.with(merged_hash)
-        else
-          merged_args = args + values.drop(args.size)
-          self.class.new(*merged_args)
-        end
+      def with(hash = {})
+        return self if hash.empty?
+        merged_hash = Hash[self.class::VALUE_ATTRS.map { |field| [field, send(field)]}].merge(hash)
+        self.class.with(merged_hash)
       end
 
       class_eval &block if block
