@@ -50,6 +50,12 @@ class Value
         "#<#{self.class.name} #{attributes}>"
       end
 
+      def with(hash = {})
+        return self if hash.empty?
+        merged_hash = Hash[self.class::VALUE_ATTRS.map { |field| [field, send(field)]}].merge(hash)
+        self.class.with(merged_hash)
+      end
+
       class_eval &block if block
     end
   end

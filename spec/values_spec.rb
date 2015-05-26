@@ -133,4 +133,32 @@ describe 'values' do
       Point.new(10, 13).values.should == [10, 13]
     end
   end
+
+  describe '#with' do
+    let(:p) { Point.new(1, -1) }
+
+    describe 'with no arguments' do
+      it 'returns an object equal by value' do
+        expect(p.with).to eq(p)
+      end
+
+      it 'returns an object equal by identity' do
+        expect(p.with).to equal(p)
+      end
+    end
+
+    describe 'with hash arguments' do
+      it 'replaces all field values' do
+        expect(p.with({ :x => 1, :y => 2 })).to eq(Point.new(1, 2))
+      end
+
+      it 'defaults to current values if missing' do
+        expect(p.with({ :y => 2 })).to eq(Point.new(1, 2))
+      end
+
+      it 'raises argument error if unknown field' do
+        expect { p.with({ :foo => 3 }) }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end
