@@ -53,6 +53,13 @@ q = p.with(y: 2)
 # => #<Point x=1, y=2>
 ```
 
+Value classes can be converted to a hash, like OpenStruct:
+
+```ruby
+Point.with(x: 1, y: -1).to_h
+# => {:x=>1, :y=>-1}
+```
+
 Values also supports customization of value classes inheriting from `Value.new`:
 
 ```ruby

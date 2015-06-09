@@ -161,4 +161,12 @@ describe 'values' do
       end
     end
   end
+
+  describe '#to_h' do
+    let(:p) { Point.new(1, -1) }
+
+    it 'returns a hash of fields and values' do
+      expect(p.to_h).to eq({ :x => 1, :y => -1 })
+    end
+  end
 end

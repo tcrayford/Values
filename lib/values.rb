@@ -56,6 +56,10 @@ class Value
         self.class.with(merged_hash)
       end
 
+      def to_h
+        Hash[self.class::VALUE_ATTRS.map { |field| [field, send(field)]}]
+      end
+
       class_eval &block if block
     end
   end
