@@ -46,14 +46,17 @@ class Value
       end
 
       def inspect
-        attributes = self.class::VALUE_ATTRS.map { |field| "#{field}=#{send(field).inspect}" }.join(", ")
+        attributes = to_h.map { |field, value| "#{field}=#{value.inspect}" }.join(", ")
         "#<#{self.class.name} #{attributes}>"
       end
 
       def with(hash = {})
         return self if hash.empty?
-        merged_hash = Hash[self.class::VALUE_ATTRS.map { |field| [field, send(field)]}].merge(hash)
-        self.class.with(merged_hash)
+        self.class.with(to_h.merge(hash))
+      end
+
+      def to_h
+        Hash[self.class::VALUE_ATTRS.zip(values)]
       end
 
       class_eval &block if block

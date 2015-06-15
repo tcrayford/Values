@@ -134,6 +134,16 @@ describe 'values' do
     end
   end
 
+  ManyAttrs = Value.new(:f, :e, :d, :c, :b, :a)
+
+  describe '#inspect' do
+    let(:v) { ManyAttrs.new(6, 5, 4, 3, 2, 1) }
+
+    it 'returns a string containing attributes in their expected order' do
+      expect(v.inspect).to eq('#<ManyAttrs f=6, e=5, d=4, c=3, b=2, a=1>')
+    end
+  end
+
   describe '#with' do
     let(:p) { Point.new(1, -1) }
 
@@ -159,6 +169,14 @@ describe 'values' do
       it 'raises argument error if unknown field' do
         expect { p.with({ :foo => 3 }) }.to raise_error(ArgumentError)
       end
+    end
+  end
+
+  describe '#to_h' do
+    let(:p) { Point.new(1, -1) }
+
+    it 'returns a hash of fields and values' do
+      expect(p.to_h).to eq({ :x => 1, :y => -1 })
     end
   end
 end
