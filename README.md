@@ -1,3 +1,5 @@
+[![Gem Version](https://img.shields.io/gem/v/values.svg)](https://rubygems.org/gems/values/)
+
 Values is a tiny library for creating value objects in ruby.
 These mostly look like classes created using Struct, but fix two problems with those:
 
