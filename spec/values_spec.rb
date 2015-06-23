@@ -179,4 +179,12 @@ describe 'values' do
       expect(p.to_h).to eq({ :x => 1, :y => -1 })
     end
   end
+
+  describe '#to_a' do
+    let(:p) { Point.new(1, -1) }
+
+    it 'returns an array of pairs of fields and values' do
+      expect(p.to_a).to eq([[:x, 1], [:y, -1]])
+    end
+  end
 end

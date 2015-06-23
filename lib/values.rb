@@ -59,6 +59,10 @@ class Value
         Hash[self.class::VALUE_ATTRS.zip(values)]
       end
 
+      def to_a
+        self.class::VALUE_ATTRS.zip(values)
+      end
+
       class_eval &block if block
     end
   end
