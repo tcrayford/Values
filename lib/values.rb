@@ -46,7 +46,7 @@ class Value
       end
 
       def inspect
-        attributes = to_h.map { |field, value| "#{field}=#{value.inspect}" }.join(", ")
+        attributes = to_a.map { |field, value| "#{field}=#{value.inspect}" }.join(", ")
         "#<#{self.class.name} #{attributes}>"
       end
 
@@ -56,7 +56,11 @@ class Value
       end
 
       def to_h
-        Hash[self.class::VALUE_ATTRS.zip(values)]
+        Hash[to_a]
+      end
+
+      def to_a
+        self.class::VALUE_ATTRS.map { |field| [field, send(field)] }
       end
 
       class_eval &block if block
