@@ -1,5 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/../lib/values')
-describe 'values' do
+require 'spec_helper'
+
   it 'raises argument error if given zero fields' do
     expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
   end
