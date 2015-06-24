@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+describe Value do
   it 'raises argument error if given zero fields' do
     expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
   end
