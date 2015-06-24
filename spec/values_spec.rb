@@ -1,26 +1,31 @@
 require 'spec_helper'
 
 describe Value do
-  it 'raises argument error if given zero fields' do
-    expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
+
+  describe 'Value.new' do
+    it 'raises argument error if given zero fields' do
+      expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
+    end
   end
 
   Cell = Value.new(:alive)
 
-  it 'stores a single field' do
-    expect(Cell.new(true).alive).to eq(true)
-  end
-
   Point = Value.new(:x, :y)
 
-  it 'stores multiple values' do
-    p = Point.new(0,1)
-    expect(p.x).to eq(0)
-    expect(p.y).to eq(1)
-  end
+  describe '.new and the fields of a value class' do
+    it 'stores a single field' do
+      expect(Cell.new(true).alive).to eq(true)
+    end
 
-  it 'raises argument errors if not given the right number of arguments' do
-    expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    it 'stores multiple values' do
+      p = Point.new(0,1)
+      expect(p.x).to eq(0)
+      expect(p.y).to eq(1)
+    end
+
+    it 'raises argument errors if not given the right number of arguments' do
+      expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    end
   end
 
   class GraphPoint < Value.new(:x, :y)
