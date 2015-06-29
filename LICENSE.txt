@@ -1,4 +1,5 @@
-Copyright (c) 2011 Tom Crayford
+Copyright (c) 2011, 2012, 2013, 2014, 2015 Tom Crayford
+Copyright (c) 2015 Marc Siegel
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
