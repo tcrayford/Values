@@ -1,26 +1,32 @@
-require File.expand_path(File.dirname(__FILE__) + '/../lib/values')
-describe 'values' do
-  it 'raises argument error if given zero fields' do
-    expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'values')
+require 'rspec'
+
+describe Value do
+
+  describe 'Value.new' do
+    it 'raises argument error if given zero fields' do
+      expect { Value.new }.to raise_error(ArgumentError, 'wrong number of arguments (0 for 1+)')
+    end
   end
 
   Cell = Value.new(:alive)
 
-  it 'stores a single field' do
-    c = Cell.new(true)
-    c.alive.should == true
-  end
-
   Point = Value.new(:x, :y)
 
-  it 'stores multiple values' do
-    p = Point.new(0,1)
-    p.x.should == 0
-    p.y.should == 1
-  end
+  describe '.new and the fields of a value class' do
+    it 'stores a single field' do
+      expect(Cell.new(true).alive).to eq(true)
+    end
 
-  it 'raises argument errors if not given the right number of arguments' do
-    expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    it 'stores multiple values' do
+      p = Point.new(0,1)
+      expect(p.x).to eq(0)
+      expect(p.y).to eq(1)
+    end
+
+    it 'raises argument errors if not given the right number of arguments' do
+      expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    end
   end
 
   class GraphPoint < Value.new(:x, :y)
@@ -30,13 +36,11 @@ describe 'values' do
   end
 
   it 'can be inherited from to add methods' do
-    c = GraphPoint.new(0,0)
-    c.inspect.should == 'GraphPoint at 0,0'
+    expect(GraphPoint.new(0,0).inspect).to eq('GraphPoint at 0,0')
   end
 
   it 'has a pretty string representation' do
-    p = Point.new(0, 1)
-    p.inspect.should == "#<Point x=0, y=1>"
+    expect(Point.new(0, 1).inspect).to eq('#<Point x=0, y=1>')
   end
 
   Line = Value.new(:slope, :y_intercept) do
@@ -46,8 +50,7 @@ describe 'values' do
   end
 
   it 'can be customized with a block' do
-    l = Line.new(2, 3)
-    l.inspect.should == '<Line: y=2x+3>'
+    expect(Line.new(2, 3).inspect).to eq('<Line: y=2x+3>')
   end
 
   it 'cannot be mutated' do
@@ -61,9 +64,9 @@ describe 'values' do
     end
   end
 
-  it 'cannot even be mutated inside a sublass with methods' do
-    c = Cow.new("red")
-    expect { c.change_color("blue") }.to raise_error
+  it 'cannot even be mutated inside a subclass with methods' do
+    c = Cow.new('red')
+    expect { c.change_color('blue') }.to raise_error
   end
 
   Money = Value.new(:amount, :denomination)
@@ -75,62 +78,54 @@ describe 'values' do
 
   it 'can be instantiated with a hash' do
     one_dollar = Money.with(:amount => 1, :denomination => 'USD')
-    one_dollar.amount.should == 1
-    one_dollar.denomination.should == 'USD'
+    expect(one_dollar.amount).to eq(1)
+    expect(one_dollar.denomination).to eq('USD')
   end
 
   it 'errors if you instantiate it from a hash with unrecognised fields' do
-    expect do
-      Money.with(:unrecognized_field => 1, :amount => 2, :denomination => 'USD')
-    end.to raise_error
+    expect { Money.with(:unrecognized_field => 1, :amount => 2, :denomination => 'USD') }.to raise_error(ArgumentError)
   end
 
   it 'errors if you instantiate it from a hash with missing fields' do
-    expect do
-      Money.with({})
-    end.to raise_error(ArgumentError)
+    expect { Money.with({}) }.to raise_error(ArgumentError)
   end
 
   it 'does not error when fields are explicitly nil' do
-    expect do
-      Money.with(:amount => 1, :denomination => nil)
-    end.not_to raise_error
+    expect { Money.with(:amount => 1, :denomination => nil) }.not_to raise_error
   end
 
   describe '#hash and equality' do
     Y = Value.new(:x, :y)
 
     it 'is equal to another value with the same fields' do
-      Point.new(0,0).should == Point.new(0,0)
+      expect(Point.new(0,0)).to eq(Point.new(0,0))
     end
 
     it 'is not equal to an object with a different class' do
-      Point.new(0,0).should_not == Y.new(0,0)
+      expect(Point.new(0,0)).not_to eq(Y.new(0,0))
     end
 
     it 'is not equal to another value with different fields' do
-      Point.new(0,0).should_not == Point.new(0,1)
-      Point.new(0,0).should_not == Point.new(1,0)
+      expect(Point.new(0,0)).not_to eq(Point.new(0,1))
+      expect(Point.new(0,0)).not_to eq(Point.new(1,0))
     end
 
     it 'has an equal hash if the fields are equal' do
-      p = Point.new(0,0)
-      p.hash.should == Point.new(0,0).hash
+      expect(Point.new(0,0).hash).to eq(Point.new(0,0).hash)
     end
 
     it 'has a non-equal hash if the fields are different' do
-      p = Point.new(0,0)
-      p.hash.should_not == Point.new(1,0).hash
+      expect(Point.new(0,0).hash).not_to eq(Point.new(1,0).hash)
     end
 
     it 'does not have an equal hash if the class is different' do
-      Point.new(0,0).hash.should_not == Y.new(0,0).hash
+      expect(Point.new(0,0).hash).not_to eq(Y.new(0,0).hash)
     end
   end
 
   describe '#values' do
     it 'returns an array of field values' do
-      Point.new(10, 13).values.should == [10, 13]
+      expect(Point.new(10, 13).values).to eq([10, 13])
     end
   end
 
@@ -173,18 +168,14 @@ describe 'values' do
   end
 
   describe '#to_h' do
-    let(:p) { Point.new(1, -1) }
-
     it 'returns a hash of fields and values' do
-      expect(p.to_h).to eq({ :x => 1, :y => -1 })
+      expect(Point.new(1, -1).to_h).to eq({ :x => 1, :y => -1 })
     end
   end
 
   describe '#to_a' do
-    let(:p) { Point.new(1, -1) }
-
     it 'returns an array of pairs of fields and values' do
-      expect(p.to_a).to eq([[:x, 1], [:y, -1]])
+      expect(Point.new(1, -1).to_a).to eq([[:x, 1], [:y, -1]])
     end
   end
 end
