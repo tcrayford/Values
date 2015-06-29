@@ -5,4 +5,12 @@ group :test do
   gem 'codecov', :require => false
 end
 
+if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '1.9'
+  group :doc do
+    gem 'yard'
+    gem 'redcarpet'
+    gem 'github-markup'
+  end
+end
+
 gemspec
