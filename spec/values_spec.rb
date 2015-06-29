@@ -1,5 +1,18 @@
-require File.join(File.dirname(__FILE__), '..', 'lib', 'values')
+# Enable codecov.io on Ruby 1.9 and later on Travis CI
+if RUBY_VERSION >= '1.9'
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+  if ENV['CI']=='true'
+    require 'codecov'
+    SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  end
+end
+
+# Require rspec and the actual library under test
 require 'rspec'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'values')
 
 describe Value do
 
