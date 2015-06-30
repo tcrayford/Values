@@ -10,7 +10,7 @@
 
 Values is a tiny library for creating value objects in ruby.
 
-Classes created using {Value} mostly look like classes created using
+Classes created using [Value](lib/values.rb) mostly look like classes created using
 [Struct](http://ruby-doc.org/core-2.2.1/Struct.html) or
 [OpenStruct](http://ruby-doc.org/stdlib-2.2.1/libdoc/ostruct/rdoc/OpenStruct.html),
 but fix two problems with those:
