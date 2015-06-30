@@ -17,7 +17,7 @@ but fix two problems with those:
 
 ## Problems with [Struct](http://ruby-doc.org/core-2.2.1/Struct.html) and [OpenStruct](http://ruby-doc.org/stdlib-2.2.1/libdoc/ostruct/rdoc/OpenStruct.html)
 
-Struct and OpenStruct constructors can take less than the default number of arguments and set other fields as nil:
+Struct and OpenStruct constructors can take fewer than the default number of arguments and set other fields as nil:
 
 ```ruby
 Point = Struct.new(:x, :y)
