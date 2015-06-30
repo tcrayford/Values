@@ -1,0 +1,5 @@
+--readme README.md
+--title 'Values Gem Documentation'
+--charset utf-8
+--markup markdown
+lib/**/*.rb

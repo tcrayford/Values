@@ -1,4 +1,22 @@
+# Simple immutable value objects for ruby.
+#
+# @example Make a new value class:
+#   Point = Value.new(:x, :y)
+#
+# @example And use it:
+#   p = Point.new(1, 0)
+#   p.x
+#   #=> 1
+#   p.y
+#   #=> 0
+#
 class Value
+  # Create a new value class.
+  #
+  # @param  [Array<Symbol>] fields  Names of fields to create in the new value class
+  # @param  [Proc]          block   Optionally, a block to further define the new value class
+  # @return [Class]                 A new value class with the provided `fields`
+  # @raise  [ArgumentError]         If no field names are provided
   def self.new(*fields, &block)
     raise ArgumentError.new('wrong number of arguments (0 for 1+)') if fields.empty?
 
