@@ -10,9 +10,9 @@
   - Add CodeCov.io and badge (#29, #36 )
   - Add gem version badge (#30)
   - Document with YARD and add a rubydoc.info link to docs (#38)
-  - Document that it also replaces OpenStruct (via #with and #to_h) (#39) 
+  - Document that it also replaces OpenStruct (via #with and #to_h) (#39)
   - Add HISTORY.md
-  
+
 ## [v1.7.1 (Mar 1, 2015)](https://github.com/tcrayford/Values/commits/v1.7.1)
 
   - (first release in HISTORY.md)
