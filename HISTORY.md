@@ -1,6 +1,8 @@
 # Release History Summary
 
-## [Upcoming Release v1.8.0 (target Jun 30, 2015)](http://github.com/tcrayford/Values/compare/v1.7.1...master)
+## [Upcoming Release](http://github.com/tcrayford/Values/compare/v1.8.0...master)
+
+## [v1.8.0 (Jul 1, 2015)](http://github.com/tcrayford/Values/compare/v1.7.1...v1.8.0)
 
   - Fix zero-field Value class edge case (#23)
   - Fix Gemfile.lock issue (#22)
