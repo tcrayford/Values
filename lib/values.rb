@@ -74,7 +74,7 @@ class Value
       end
 
       def to_h
-        Hash[to_a]
+        Hash[to_a.map{|k, v| [k, Value.try_to_h(v)]}]
       end
 
       def to_a
@@ -82,6 +82,21 @@ class Value
       end
 
       class_eval &block if block
+    end
+  end
+
+  protected
+
+  def self.try_to_h(v)
+    case
+    when v.is_a?(Hash)
+      Hash[v.map{|hk, hv| [hk, try_to_h(hv)]}]
+    when v.respond_to?(:map)
+      v.map{|x| try_to_h(x)}
+    when v && v.respond_to?(:to_h)
+      v.to_h
+    else
+      v
     end
   end
 end

@@ -26,6 +26,10 @@ describe Value do
 
   Point = Value.new(:x, :y)
 
+  Rectangle = Value.new(:top_left, :bottom_right)
+
+  Board = Value.new(:cells)
+
   describe '.new and the fields of a value class' do
     it 'stores a single field' do
       expect(Cell.new(true).alive).to eq(true)
@@ -184,6 +188,18 @@ describe Value do
     it 'returns a hash of fields and values' do
       expect(Point.new(1, -1).to_h).to eq({ :x => 1, :y => -1 })
     end
+
+    it 'converts nested values' do
+      expect(Rectangle.new(Point.new(0, 1), Point.new(1, 0)).to_h).to eq({:top_left => {:x => 0, :y => 1}, :bottom_right => {:x => 1, :y => 0}})
+    end
+
+    it 'converts values in an array field' do
+      expect(Board.new([Cell.new(false), Cell.new(true)]).to_h).to eq({:cells => [{:alive => false}, {:alive => true}]})
+    end
+
+    it 'converts values in a hash field' do
+      expect(Board.new({:mine => Cell.new(true), :yours => Cell.new(false)}).to_h).to eq({:cells => {:mine => {:alive => true}, :yours => {:alive => false}}})
+    end
   end
 
   describe '#to_a' do
@@ -191,5 +207,4 @@ describe Value do
       expect(Point.new(1, -1).to_a).to eq([[:x, 1], [:y, -1]])
     end
   end
-
 end
