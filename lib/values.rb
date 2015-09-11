@@ -77,11 +77,30 @@ class Value
         Hash[to_a]
       end
 
+      def recursive_to_h
+        Hash[to_a.map{|k, v| [k, Value.coerce_to_h(v)]}]
+      end
+
       def to_a
         self.class::VALUE_ATTRS.map { |field| [field, send(field)] }
       end
 
       class_eval &block if block
+    end
+  end
+
+  protected
+
+  def self.coerce_to_h(v)
+    case
+    when v.is_a?(Hash)
+      Hash[v.map{|hk, hv| [hk, coerce_to_h(hv)]}]
+    when v.respond_to?(:map)
+      v.map{|x| coerce_to_h(x)}
+    when v && v.respond_to?(:to_h)
+      v.to_h
+    else
+      v
     end
   end
 end

@@ -26,6 +26,10 @@ describe Value do
 
   Point = Value.new(:x, :y)
 
+  Rectangle = Value.new(:top_left, :bottom_right)
+
+  Board = Value.new(:cells)
+
   describe '.new and the fields of a value class' do
     it 'stores a single field' do
       expect(Cell.new(true).alive).to eq(true)
@@ -154,6 +158,7 @@ describe Value do
 
   describe '#with' do
     let(:p) { Point.new(1, -1) }
+    let(:b) { Point.new(Set.new([1, 2, 3]), Set.new([4, 5, 6])) }
 
     describe 'with no arguments' do
       it 'returns an object equal by value' do
@@ -168,6 +173,10 @@ describe Value do
     describe 'with hash arguments' do
       it 'replaces all field values' do
         expect(p.with({ :x => 1, :y => 2 })).to eq(Point.new(1, 2))
+      end
+
+      it 'handles nested args' do
+        expect( b.with({:x => Set.new([1])})).to eq(Point.new(Set.new([1]), b.y))
       end
 
       it 'defaults to current values if missing' do
@@ -186,10 +195,23 @@ describe Value do
     end
   end
 
+  describe '#recursive_to_h' do
+    it 'converts nested values' do
+      expect(Rectangle.new(Point.new(0, 1), Point.new(1, 0)).recursive_to_h).to eq({:top_left => {:x => 0, :y => 1}, :bottom_right => {:x => 1, :y => 0}})
+    end
+
+    it 'converts values in an array field' do
+      expect(Board.new([Cell.new(false), Cell.new(true)]).recursive_to_h).to eq({:cells => [{:alive => false}, {:alive => true}]})
+    end
+
+    it 'converts values in a hash field' do
+      expect(Board.new({:mine => Cell.new(true), :yours => Cell.new(false)}).recursive_to_h).to eq({:cells => {:mine => {:alive => true}, :yours => {:alive => false}}})
+    end
+  end
+
   describe '#to_a' do
     it 'returns an array of pairs of fields and values' do
       expect(Point.new(1, -1).to_a).to eq([[:x, 1], [:y, -1]])
     end
   end
-
 end
