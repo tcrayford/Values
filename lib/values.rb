@@ -74,7 +74,11 @@ class Value
       end
 
       def to_h
-        Hash[to_a.map{|k, v| [k, Value.try_to_h(v)]}]
+        Hash[to_a]
+      end
+
+      def recursive_to_h
+        Hash[to_a.map{|k, v| [k, Value.coerce_to_h(v)]}]
       end
 
       def to_a
@@ -87,12 +91,12 @@ class Value
 
   protected
 
-  def self.try_to_h(v)
+  def self.coerce_to_h(v)
     case
     when v.is_a?(Hash)
-      Hash[v.map{|hk, hv| [hk, try_to_h(hv)]}]
+      Hash[v.map{|hk, hv| [hk, coerce_to_h(hv)]}]
     when v.respond_to?(:map)
-      v.map{|x| try_to_h(x)}
+      v.map{|x| coerce_to_h(x)}
     when v && v.respond_to?(:to_h)
       v.to_h
     else

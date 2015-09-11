@@ -193,17 +193,19 @@ describe Value do
     it 'returns a hash of fields and values' do
       expect(Point.new(1, -1).to_h).to eq({ :x => 1, :y => -1 })
     end
+  end
 
+  describe '#recursive_to_h' do
     it 'converts nested values' do
-      expect(Rectangle.new(Point.new(0, 1), Point.new(1, 0)).to_h).to eq({:top_left => {:x => 0, :y => 1}, :bottom_right => {:x => 1, :y => 0}})
+      expect(Rectangle.new(Point.new(0, 1), Point.new(1, 0)).recursive_to_h).to eq({:top_left => {:x => 0, :y => 1}, :bottom_right => {:x => 1, :y => 0}})
     end
 
     it 'converts values in an array field' do
-      expect(Board.new([Cell.new(false), Cell.new(true)]).to_h).to eq({:cells => [{:alive => false}, {:alive => true}]})
+      expect(Board.new([Cell.new(false), Cell.new(true)]).recursive_to_h).to eq({:cells => [{:alive => false}, {:alive => true}]})
     end
 
     it 'converts values in a hash field' do
-      expect(Board.new({:mine => Cell.new(true), :yours => Cell.new(false)}).to_h).to eq({:cells => {:mine => {:alive => true}, :yours => {:alive => false}}})
+      expect(Board.new({:mine => Cell.new(true), :yours => Cell.new(false)}).recursive_to_h).to eq({:cells => {:mine => {:alive => true}, :yours => {:alive => false}}})
     end
   end
 
