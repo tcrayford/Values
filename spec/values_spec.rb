@@ -158,6 +158,7 @@ describe Value do
 
   describe '#with' do
     let(:p) { Point.new(1, -1) }
+    let(:b) { Point.new(Set.new([1, 2, 3]), Set.new([4, 5, 6])) }
 
     describe 'with no arguments' do
       it 'returns an object equal by value' do
@@ -172,6 +173,10 @@ describe Value do
     describe 'with hash arguments' do
       it 'replaces all field values' do
         expect(p.with({ :x => 1, :y => 2 })).to eq(Point.new(1, 2))
+      end
+
+      it 'handles nested args' do
+        expect( b.with({:x => Set.new([1])})).to eq(Point.new(Set.new([1]), b.y))
       end
 
       it 'defaults to current values if missing' do
