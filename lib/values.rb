@@ -70,7 +70,8 @@ class Value
 
       def pretty_print(q)
         q.group(1, "#<#{self.class.name}", '>') do
-          q.seplist(to_a, lambda { q.text ',' }) do |field, value|
+          q.seplist(to_a, lambda { q.text ',' }) do |pair|
+            field, value = pair
             q.breakable
             q.text field.to_s
             q.text '='
