@@ -156,6 +156,22 @@ describe Value do
     end
   end
 
+  describe '#pretty_print' do
+    let(:v) { ManyAttrs.new(6, 5, 4, 3, 2, 1) }
+
+    it 'returns string with breaks after every value if any value is long' do
+      expect(v.with(:f => 'a' * 70).pretty_inspect).to eq("#<ManyAttrs\n f=\"#{'a' * 70}\",\n e=5,\n d=4,\n c=3,\n b=2,\n a=1>\n")
+    end
+
+    it 'returns string with breaks after a field name if its line is very long' do
+      expect(v.with(:f => 'a' * 80).pretty_inspect).to eq("#<ManyAttrs\n f=\n  \"#{'a' * 80}\",\n e=5,\n d=4,\n c=3,\n b=2,\n a=1>\n")
+    end
+
+    it 'returns the same as #inspect when no need to break lines' do
+      expect(v.pretty_inspect).to eq("#{v.inspect}\n")
+    end
+  end
+
   describe '#with' do
     let(:p) { Point.new(1, -1) }
     let(:b) { Point.new(Set.new([1, 2, 3]), Set.new([4, 5, 6])) }

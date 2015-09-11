@@ -64,8 +64,22 @@ class Value
       end
 
       def inspect
-        attributes = to_a.map { |field, value| "#{field}=#{value.inspect}" }.join(", ")
+        attributes = to_a.map { |field, value| "#{field}=#{value.inspect}" }.join(', ')
         "#<#{self.class.name} #{attributes}>"
+      end
+
+      def pretty_print(q)
+        q.group(1, "#<#{self.class.name}", '>') do
+          q.seplist(to_a, lambda { q.text ',' }) do |field, value|
+            q.breakable
+            q.text field.to_s
+            q.text '='
+            q.group(1) do
+              q.breakable ''
+              q.pp value
+            end
+          end
+        end
       end
 
       def with(hash = {})
