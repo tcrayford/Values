@@ -230,4 +230,13 @@ describe Value do
       expect(Point.new(1, -1).to_a).to eq([[:x, 1], [:y, -1]])
     end
   end
+
+  describe '.attr_reader' do
+    Freeze = Value.new(:x)
+    it 'raises runtime error if open and change class' do
+      error_class = RUBY_VERSION >= '1.9' ? RuntimeError : TypeError
+      expect { class Freeze; attr_reader(:y); end }.to raise_error(error_class)
+    end
+  end
+
 end
