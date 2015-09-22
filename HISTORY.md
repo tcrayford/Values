@@ -1,6 +1,11 @@
 # Release History Summary
 
-## [Upcoming Release](http://github.com/tcrayford/Values/compare/v1.8.0...master)
+## [Upcoming Release](http://github.com/tcrayford/Values/compare/v1.9.0...master)
+
+## [v1.9.0 (Sep 22, 2015)](http://github.com/tcrayford/Values/compare/v1.8.0...v1.9.0)
+
+  - Add a `#recursive_to_h` method (#43, thanks @blinsay)
+  - Support ruby's pretty printing with line-wrapping like Struct (#46)
 
 ## [v1.8.0 (Jul 1, 2015)](http://github.com/tcrayford/Values/compare/v1.7.1...v1.8.0)
 
