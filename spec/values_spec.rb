@@ -43,10 +43,10 @@ describe Value do
 
     it 'raises argument errors if not given the right number of arguments' do
       expect { Point.new }.to raise_error do |error|
-        expect(error).to be_a(Values::ArgumentError)
+        expect(error).to be_a(Values::FieldError)
         expect(error.message).to eq('wrong number of arguments, 0 for 2')
-        expect(error.missing_keys).to contain_exactly(:x, :y)
-        expect(error.unexpected_keys).to be_nil
+        expect(error.missing_fields).to contain_exactly(:x, :y)
+        expect(error.unexpected_fields).to be_empty
       end
     end
   end
@@ -106,17 +106,17 @@ describe Value do
 
   it 'errors if you instantiate it from a hash with unrecognised fields' do
     expect { Money.with(:unrecognized_field => 1, :amount => 2, :denomination => 'USD') }.to raise_error do |error|
-      expect(error).to be_a(Values::ArgumentError)
-      expect(error.missing_keys).to be_empty
-      expect(error.unexpected_keys).to contain_exactly(:unrecognized_field)
+      expect(error).to be_a(Values::FieldError)
+      expect(error.missing_fields).to be_empty
+      expect(error.unexpected_fields).to contain_exactly(:unrecognized_field)
     end
   end
 
   it 'errors if you instantiate it from a hash with missing fields' do
     expect { Money.with({}) }.to raise_error do |error|
-      expect(error).to be_a(Values::ArgumentError)
-      expect(error.missing_keys).to contain_exactly(:amount, :denomination)
-      expect(error.unexpected_keys).to be_empty
+      expect(error).to be_a(Values::FieldError)
+      expect(error.missing_fields).to contain_exactly(:amount, :denomination)
+      expect(error.unexpected_fields).to be_empty
     end
   end
 
@@ -214,9 +214,9 @@ describe Value do
 
       it 'raises argument error if unknown field' do
         expect { p.with({ :foo => 3 , :bar => "baz" }) }.to raise_error do |error|
-          expect(error).to be_a(Values::ArgumentError)
-          expect(error.unexpected_keys).to contain_exactly(:foo, :bar)
-          expect(error.missing_keys).to be_empty
+          expect(error).to be_a(Values::FieldError)
+          expect(error.unexpected_fields).to contain_exactly(:foo, :bar)
+          expect(error.missing_fields).to be_empty
         end
       end
     end
