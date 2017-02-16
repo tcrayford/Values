@@ -1,5 +1,5 @@
-# Enable codecov.io on Ruby 1.9 and later on Travis CI
-if RUBY_VERSION >= '1.9'
+# Enable codecov.io on Ruby 2.2 and later on Travis CI
+if RUBY_VERSION >= '2.2'
   require 'simplecov'
   SimpleCov.start do
     add_filter '/spec/'
