@@ -32,5 +32,5 @@ matrix:
     - rvm: ruby-head
     - rvm: 1.9.2 # See build error https://travis-ci.org/tcrayford/Values/jobs/202728857
     - rvm: jruby-head
-    - rvm: rbx-3
+    - rvm: rubinius-3
   fast_finish: true
