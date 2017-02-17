@@ -25,7 +25,7 @@ rvm:
   - jruby-19mode
   - jruby-18mode
   # Rubinius
-  - rbx-3
+  - rubinius-3
 
 matrix:
   allow_failures:
