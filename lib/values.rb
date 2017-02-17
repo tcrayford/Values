@@ -10,6 +10,17 @@
 #   p.y
 #   #=> 0
 #
+module Values
+  class FieldError < ::ArgumentError
+    attr_reader :missing_fields, :unexpected_fields
+
+    def initialize(message, missing_fields=[], unexpected_fields=[])
+      @missing_fields, @unexpected_fields = missing_fields, unexpected_fields
+      super(message)
+    end
+  end
+end
+
 class Value
   # Create a new value class.
   #
@@ -24,7 +35,9 @@ class Value
       attr_reader(:hash, *fields)
 
       define_method(:initialize) do |*values|
-        raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
+        if (fields.size != values.size)
+          raise Values::FieldError.new("wrong number of arguments, #{values.size} for #{fields.size}", fields[values.size..-1])
+        end
 
         fields.zip(values) do |field, value|
           instance_variable_set(:"@#{field}", value)
@@ -38,14 +51,13 @@ class Value
       const_set :VALUE_ATTRS, fields
 
       def self.with(hash)
-        unexpected_keys = hash.keys - self::VALUE_ATTRS
-        if unexpected_keys.any?
-          raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
-        end
+        unexpected_fields = hash.keys - self::VALUE_ATTRS
+        missing_fields = self::VALUE_ATTRS - hash.keys
 
-        missing_keys = self::VALUE_ATTRS - hash.keys
-        if missing_keys.any?
-          raise ArgumentError.new("Missing hash keys: #{missing_keys} (got keys #{hash.keys})")
+        if unexpected_fields.any?
+          raise Values::FieldError.new("Unexpected hash keys: #{unexpected_fields}", missing_fields, unexpected_fields)
+        elsif missing_fields.any?
+          raise Values::FieldError.new("Missing hash keys: #{missing_fields} (got keys #{hash.keys})", missing_fields, unexpected_fields)
         end
 
         new(*hash.values_at(*self::VALUE_ATTRS))
