@@ -1,8 +1,7 @@
 language: ruby
 
-cache: bundler
-
-sudo: false
+# Apparently sudo is required to test on Rubinius and JRuby-head
+sudo: required
 
 # See https://docs.travis-ci.com/user/languages/ruby/#Rubinius
 dist: trusty
