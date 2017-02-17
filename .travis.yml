@@ -15,6 +15,7 @@ rvm:
   - 2.2
   - 2.1
   - 2.0
+  - 1.9.2 # allowed to fail until Travis binary for this is fixed
   - 1.9.3
   - 1.8.7
   - ree
