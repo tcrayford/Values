@@ -23,17 +23,23 @@ class Value
     Class.new do
       attr_reader(:hash, *fields)
 
-      define_method(:initialize) do |*values|
-        raise ArgumentError.new("wrong number of arguments, #{values.size} for #{fields.size}") if fields.size != values.size
+      instance_var_assignments = Array.new(fields.length) do |idx|
+        "@#{fields[idx]} = values[#{idx}]"
+      end.join("\n")
 
-        fields.zip(values) do |field, value|
-          instance_variable_set(:"@#{field}", value)
+      class_eval <<-RUBY
+        def initialize(*values)
+          if #{fields.size} != values.size
+            raise ArgumentError.new("wrong number of arguments, \#{values.size} for #{fields.size}")
+          end
+
+          #{instance_var_assignments}
+
+          @hash = self.class.hash ^ values.hash
+
+          freeze
         end
-
-        @hash = self.class.hash ^ values.hash
-
-        freeze
-      end
+      RUBY
 
       const_set :VALUE_ATTRS, fields
 
