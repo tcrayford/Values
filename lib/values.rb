@@ -103,6 +103,10 @@ class Value
         Hash[to_a]
       end
 
+      def to_hash
+        to_h
+      end
+
       def recursive_to_h
         Hash[to_a.map{|k, v| [k, Value.coerce_to_h(v)]}]
       end
@@ -113,6 +117,14 @@ class Value
 
       class_eval &block if block
     end
+  end
+
+  def self.from(hash_or_coercible_object)
+    coerced = Hash(hash_or_coercible_object)
+    keys = coerced.keys
+
+    klass_cache[keys] ||= new(*keys)
+    klass_cache[keys].with(coerced)
   end
 
   protected
@@ -128,5 +140,11 @@ class Value
     else
       v
     end
+  end
+
+  private
+
+  def self.klass_cache
+    @klass_cache ||= {}
   end
 end

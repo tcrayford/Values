@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.licenses    = ["MIT"]
 
   gem.required_ruby_version = ">= 1.8.7"
-  gem.add_development_dependency "rspec", "~> 2.11.0"
+  gem.add_development_dependency "rspec", "~> 2.14.0"
 
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

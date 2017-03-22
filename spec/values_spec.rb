@@ -205,6 +205,52 @@ describe Value do
     end
   end
 
+  describe '.from' do
+    describe 'with valid arguments' do
+      shared_examples 'happy path' do |input_name|
+        context "when passed #{input_name}" do
+
+          it 'creates a Value class from the object' do
+            Value.stub(:klass_cache) { @memo ||= Hash.new }
+            Value.should_receive(:new).with(:a, :b).and_call_original
+            Value.from(input)
+          end
+
+          it 'returns an instance of the Value class' do
+            result = Value.from(input)
+            expect(result).to respond_to(:a)
+            expect(result).to respond_to(:b)
+          end
+
+          it 'uses the same Value class across multiple calls' do
+            object_1 = Value.from(input)
+            object_2 = Value.from(input)
+
+            expect(object_1.class).to eq(object_2.class)
+          end
+        end
+      end
+
+      include_examples 'happy path', 'a valid Hash' do
+        let(:input) { { a: 1, b: 2} }
+      end
+
+      include_examples 'happy path', 'an object that coerces to Hash' do
+        let(:input) do
+          Object.new.tap  do |o|
+            o.define_singleton_method(:to_hash) { {a: 1, b: 2} }
+          end
+        end
+      end
+
+      describe 'when passed an uncoercible object' do
+        it 'raises an error' do
+          expect { Value.from(Object.new) }.to raise_error(TypeError)
+        end
+      end
+    end
+  end
+
   describe '#to_h' do
     it 'returns a hash of fields and values' do
       expect(Point.new(1, -1).to_h).to eq({ :x => 1, :y => -1 })

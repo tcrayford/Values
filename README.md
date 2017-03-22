@@ -99,6 +99,22 @@ Point.with(x: 1, y: -1).to_h
 # => {:x=>1, :y=>-1}
 ```
 
+And can be created from an object:
+
+```ruby
+some_hash = { value: 42, other_value: true }
+
+o1 = Value.from(some_hash)
+o2 = Value.from(some_hash)
+
+o1 == o2 # => true
+
+o1.value # => 42
+o1.other_value # => true
+
+o1.other_key # => NoMethodError
+```
+
 Values also supports customization of value classes inheriting from `Value.new`:
 
 ```ruby
