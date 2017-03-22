@@ -23,6 +23,11 @@ class Value
     Class.new do
       attr_reader(:hash, *fields)
 
+      # Unroll the fields into a series of assignment Ruby statements that can
+      # be used inside of the initializer for the new class. This was introduced
+      # in PR#56 as a performance optimization -- it ensures that this iteration
+      # happens once per class, instead of happening once per instance of the
+      # class.
       instance_var_assignments = Array.new(fields.length) do |idx|
         "@#{fields[idx]} = values[#{idx}]"
       end.join("\n")
