@@ -112,6 +112,8 @@ class Value
       end
 
       class_eval &block if block
+
+      freeze
     end
   end
 
