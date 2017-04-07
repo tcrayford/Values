@@ -68,8 +68,17 @@ class Value
         eql?(other)
       end
 
+      # Optimized to check for same instance and for different hash code, and
+      # avoids intermediate Array instantiation to check fields.
       def eql?(other)
-        self.class == other.class && values == other.values
+        self.equal?(other) ||
+          (
+            self.class == other.class &&
+              self.hash == other.hash &&
+              self.class::VALUE_ATTRS.all? do |field|
+                send(field) == other.send(field)
+              end
+          )
       end
 
       def values
