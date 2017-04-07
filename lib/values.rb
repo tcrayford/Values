@@ -49,13 +49,15 @@ class Value
       const_set :VALUE_ATTRS, fields
 
       def self.with(hash)
-        unexpected_keys = hash.keys - self::VALUE_ATTRS
-        if unexpected_keys.any?
+        num_recognized_keys = self::VALUE_ATTRS.count { |field| hash.key?(field) }
+
+        if num_recognized_keys != hash.size
+          unexpected_keys = hash.keys - self::VALUE_ATTRS
           raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
         end
 
-        missing_keys = self::VALUE_ATTRS - hash.keys
-        if missing_keys.any?
+        if num_recognized_keys != self::VALUE_ATTRS.size
+          missing_keys = self::VALUE_ATTRS - hash.keys
           raise ArgumentError.new("Missing hash keys: #{missing_keys} (got keys #{hash.keys})")
         end
 
@@ -66,8 +68,17 @@ class Value
         eql?(other)
       end
 
+      # Optimized to check for same instance and for different hash code, and
+      # avoids intermediate Array instantiation to check fields.
       def eql?(other)
-        self.class == other.class && values == other.values
+        self.equal?(other) ||
+          (
+            self.class == other.class &&
+              self.hash == other.hash &&
+              self.class::VALUE_ATTRS.all? do |field|
+                send(field) == other.send(field)
+              end
+          )
       end
 
       def values
@@ -94,9 +105,22 @@ class Value
         end
       end
 
+      # Optimized to avoid intermediate Hash instantiations.
       def with(hash = {})
         return self if hash.empty?
-        self.class.with(to_h.merge(hash))
+
+        num_recognized_keys = self.class::VALUE_ATTRS.count { |field| hash.key?(field) }
+
+        if num_recognized_keys != hash.size
+          unexpected_keys = hash.keys - self.class::VALUE_ATTRS
+          raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
+        end
+
+        args = self.class::VALUE_ATTRS.map do |field|
+          hash.key?(field) ? hash[field] : send(field)
+        end
+
+        self.class.new(*args)
       end
 
       def to_h
