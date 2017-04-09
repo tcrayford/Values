@@ -62,6 +62,10 @@ class Value
         new(*hash.values_at(*self::VALUE_ATTRS))
       end
 
+      class << self
+        alias_method :[], :with
+      end
+
       def ==(other)
         eql?(other)
       end

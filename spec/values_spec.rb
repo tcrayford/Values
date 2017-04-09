@@ -99,6 +99,12 @@ describe Value do
     expect(one_dollar.denomination).to eq('USD')
   end
 
+  it 'can be instantiated with a hash using .[]' do
+    one_dollar = Money[:amount => 1, :denomination => 'USD']
+    one_dollar.amount.should == 1
+    one_dollar.denomination.should == 'USD'
+  end
+
   it 'errors if you instantiate it from a hash with unrecognised fields' do
     expect { Money.with(:unrecognized_field => 1, :amount => 2, :denomination => 'USD') }.to raise_error(ArgumentError)
   end
